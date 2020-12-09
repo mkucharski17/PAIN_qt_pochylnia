@@ -4,14 +4,11 @@
 #include<QGraphicsItem>
 #include<QDebug>
 
-class MyCircle : public QGraphicsItem
+class MyCircle : public QGraphicsEllipseItem
 {
 public:
-    MyCircle();
+    MyCircle(float a, float b, float c, float d,Qt::GlobalColor  color);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
-    bool Pressed;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);

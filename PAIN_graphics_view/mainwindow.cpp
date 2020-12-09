@@ -9,8 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
-    circle = new MyCircle();
-    scene->addItem(circle);
+    for(int i = -250 ; i < 250 ; i+=50)
+    {
+        circle = new MyCircle(i,0,50,50,Qt::red);
+        scene->addItem(circle);
+    }
+
 }
 
 MainWindow::~MainWindow()
