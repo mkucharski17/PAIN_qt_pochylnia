@@ -41,14 +41,22 @@ char MainWindow::getRandomColorLetter(){
 void MainWindow::itemSelected()
 {
     MyCircle *ball = qgraphicsitem_cast<MyCircle *>(scene->selectedItems().first());
-    for(int i = 0 ; i < balls.length() ; i++){
-        balls[i]->setBrush(QBrush(balls[i]->getColor().getColor()));
-    }
+
     int indexfClickedBall = balls.indexOf(ball);
 
-    if(indexfClickedBall > 2 || indexfClickedBall< balls.length()-3)
+    if(indexfClickedBall > 0 && indexfClickedBall < balls.length()-1)
+    {
+        if(clickedIndex!= -1)
         for(int j = -1 ; j < 2 ;j++)
-            balls.at(indexfClickedBall+j)->setBrush(QBrush(Qt::yellow));
+        {
+            balls.at(clickedIndex+j)->unselect();
+        }
+
+        for(int j = -1 ; j < 2 ;j++)
+            balls.at(indexfClickedBall+j)->select();
+
+        clickedIndex = indexfClickedBall;
+    }
 }
 
 

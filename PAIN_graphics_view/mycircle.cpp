@@ -12,4 +12,14 @@ Color MyCircle::getColor()
     return color->getColor();
 }
 
+void MyCircle::select()
+{
+   this->setOpacity(0.3);
+}
+
+void MyCircle::unselect()
+{
+    this->setOpacity(1);
+}
+
 

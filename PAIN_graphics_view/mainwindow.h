@@ -24,6 +24,7 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     QList<MyCircle*> balls;
+    int clickedIndex = -1;
     char getRandomColorLetter();
 
 };

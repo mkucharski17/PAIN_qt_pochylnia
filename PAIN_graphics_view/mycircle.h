@@ -11,7 +11,10 @@ class MyCircle : public QGraphicsEllipseItem
 public:
     MyCircle(double a, double b, double c, double d,char colorLetter, QGraphicsItem *parent);
     Color getColor();
+    void select();
+    void unselect();
 private:
+    int opacity;
     Color *color;
 };
 
