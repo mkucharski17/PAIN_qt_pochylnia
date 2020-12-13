@@ -11,12 +11,17 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     Ramp* ramp = new Ramp();
-     scene->addItem(ramp);
+    scene->addItem(ramp);
+
+
+    moveButton = scene->addWidget(new QPushButton("Move"));
+    moveButton->setPos(100,-100);
+    moveButton->setEnabled(false);
 
     for(int i = 0 ; i < 1000 ; i+=50)
-    {   MyCircle *ball = new MyCircle(i,(-0.3*i+300 -60),51.0,50.0,getRandomColorLetter(),ramp);
+    {
+        MyCircle *ball = new MyCircle(i,(-0.3*i+300 -60),51.0,50.0,getRandomColorLetter(),ramp);
         balls.append(ball);
-        scene->addItem(ball);
         ball->setFlag(QGraphicsItem::ItemIsSelectable , true);
     }
     connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::itemSelected);
@@ -40,22 +45,31 @@ char MainWindow::getRandomColorLetter(){
 
 void MainWindow::itemSelected()
 {
-    MyCircle *ball = qgraphicsitem_cast<MyCircle *>(scene->selectedItems().first());
-
-    int indexfClickedBall = balls.indexOf(ball);
-
-    if(indexfClickedBall > 0 && indexfClickedBall < balls.length()-1)
+    if(!scene->selectedItems().isEmpty())
     {
-        if(clickedIndex!= -1)
-        for(int j = -1 ; j < 2 ;j++)
+        MyCircle *ball = qgraphicsitem_cast<MyCircle *>(scene->selectedItems().first());
+
+        int indexfClickedBall = balls.indexOf(ball);
+        if(clickedIndex != -1)
+            for(int j = -1 ; j < 2 ;j++)
+            {
+                balls.at(clickedIndex+j)->unselect();
+            }
+
+        if(indexfClickedBall > 0 && indexfClickedBall < balls.length()-1)
         {
-            balls.at(clickedIndex+j)->unselect();
+            if(!moveButton->isEnabled())
+                moveButton->setEnabled(true);
+
+
+
+            for(int j = -1 ; j < 2 ;j++)
+                balls.at(indexfClickedBall+j)->select();
+
+            clickedIndex = indexfClickedBall;
         }
-
-        for(int j = -1 ; j < 2 ;j++)
-            balls.at(indexfClickedBall+j)->select();
-
-        clickedIndex = indexfClickedBall;
+      else if(moveButton->isEnabled())
+        moveButton->setEnabled(false);
     }
 }
 

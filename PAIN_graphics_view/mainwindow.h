@@ -4,7 +4,10 @@
 #include <QMainWindow>
 #include<QtCore>
 #include<QtGui>
+#include<QPushButton>
+#include<QGraphicsProxyWidget>
 #include"ramp.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -24,6 +27,7 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     QList<MyCircle*> balls;
+    QGraphicsProxyWidget *moveButton;
     int clickedIndex = -1;
     char getRandomColorLetter();
 

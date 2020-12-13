@@ -47,7 +47,6 @@
    <addaction name="menu_Gra"/>
    <addaction name="menuEdycja"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNowa_gra">
    <property name="text">
     <string>Nowa gra</string>

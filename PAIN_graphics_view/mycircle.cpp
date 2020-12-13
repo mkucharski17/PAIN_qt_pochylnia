@@ -2,14 +2,8 @@
 
 MyCircle::MyCircle(double a, double b, double c, double d,char colorLetter, QGraphicsItem *parent): QGraphicsEllipseItem(a,b,c,d,parent)
 {
+   this->setBrush(getBrushFromLetter(colorLetter));
 
-   this->color = new Color(colorLetter);
-   this->setBrush(QBrush(color->getColor()));
-}
-
-Color MyCircle::getColor()
-{
-    return color->getColor();
 }
 
 void MyCircle::select()
@@ -20,6 +14,15 @@ void MyCircle::select()
 void MyCircle::unselect()
 {
     this->setOpacity(1);
+}
+
+QBrush MyCircle::getBrushFromLetter(char letter)
+{
+    switch(letter){
+    case 'R' : return QBrush(Qt::red);
+    case 'G' : return QBrush(Qt::green);
+    case 'B' : return QBrush(Qt::blue);
+    }
 }
 
 
