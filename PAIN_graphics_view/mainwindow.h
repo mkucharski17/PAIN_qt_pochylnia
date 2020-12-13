@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include<QtCore>
 #include<QtGui>
-#include"mycircle.h"
+#include"ramp.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,10 +17,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+void itemSelected();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    MyCircle *circle;
+    QList<MyCircle*> balls;
+    char getRandomColorLetter();
 
 };
 #endif // MAINWINDOW_H

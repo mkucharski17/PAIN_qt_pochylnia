@@ -1,19 +1,15 @@
 #include "mycircle.h"
 
-MyCircle::MyCircle(float a, float b, float c, float d,Qt::GlobalColor color): QGraphicsEllipseItem(a,b,c,d)
+MyCircle::MyCircle(double a, double b, double c, double d,char colorLetter, QGraphicsItem *parent): QGraphicsEllipseItem(a,b,c,d,parent)
 {
-    this->setBrush(QBrush(color));
-    this->setPen(Qt::NoPen);
+
+   this->color = new Color(colorLetter);
+   this->setBrush(QBrush(color->getColor()));
+}
+
+Color MyCircle::getColor()
+{
+    return color->getColor();
 }
 
 
-void MyCircle::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsItem::mousePressEvent(event);
-}
-
-void MyCircle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-
-    QGraphicsItem::mouseReleaseEvent(event);
-}

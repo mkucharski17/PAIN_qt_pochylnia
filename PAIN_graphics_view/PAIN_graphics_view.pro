@@ -11,11 +11,14 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    mycircle.cpp
+    mycircle.cpp \
+    ramp.cpp
 
 HEADERS += \
+    colors.h \
     mainwindow.h \
-    mycircle.h
+    mycircle.h \
+    ramp.h
 
 FORMS += \
     mainwindow.ui

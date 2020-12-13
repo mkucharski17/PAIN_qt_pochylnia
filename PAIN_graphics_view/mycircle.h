@@ -1,18 +1,18 @@
 #ifndef MYCIRCLE_H
 #define MYCIRCLE_H
-#include<QPainter>
+#include<QtCore>
+#include<QtGui>
 #include<QGraphicsItem>
-#include<QDebug>
+#include"colors.h"
 
 class MyCircle : public QGraphicsEllipseItem
 {
+
 public:
-    MyCircle(float a, float b, float c, float d,Qt::GlobalColor  color);
-
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent * event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);
-
+    MyCircle(double a, double b, double c, double d,char colorLetter, QGraphicsItem *parent);
+    Color getColor();
+private:
+    Color *color;
 };
 
 #endif // MYCIRCLE_H
