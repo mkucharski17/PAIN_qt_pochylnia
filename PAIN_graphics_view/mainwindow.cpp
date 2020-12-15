@@ -13,25 +13,35 @@ MainWindow::MainWindow(QWidget *parent)
     Ramp* ramp = new Ramp();
     scene->addItem(ramp);
 
-
-    moveButton = scene->addWidget(new QPushButton("Move"));
+    QPushButton *btn = new QPushButton("Move");
+    moveButton = scene->addWidget(btn);
     moveButton->setPos(100,-100);
     moveButton->setEnabled(false);
+    signalMapper = new QSignalMapper(this);
+
+
 
     for(int i = 0 ; i < 1000 ; i+=50)
     {
         MyCircle *ball = new MyCircle(i,(-0.3*i+300 -60),51.0,50.0,getRandomColorLetter(),ramp);
         balls.append(ball);
         ball->setFlag(QGraphicsItem::ItemIsSelectable , true);
+        connect(this ,&MainWindow::clickedIndexChanged,ball, &MyCircle::setClickedIndex);
+        connect(btn, &QPushButton::clicked, ball,&MyCircle::move);
     }
-    connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::itemSelected);
 
+    connect(scene, &QGraphicsScene::selectionChanged, this, &MainWindow::itemSelected);
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+MainWindow::getClickedIndex()
+{
+    return this->clickedIndex;
 }
 
 char MainWindow::getRandomColorLetter(){
@@ -49,28 +59,32 @@ void MainWindow::itemSelected()
     {
         MyCircle *ball = qgraphicsitem_cast<MyCircle *>(scene->selectedItems().first());
 
-        int indexfClickedBall = balls.indexOf(ball);
+        int indexOfClickedBall = balls.indexOf(ball);
         if(clickedIndex != -1)
             for(int j = -1 ; j < 2 ;j++)
             {
                 balls.at(clickedIndex+j)->unselect();
             }
 
-        if(indexfClickedBall > 0 && indexfClickedBall < balls.length()-1)
+        if(indexOfClickedBall > 0 && indexOfClickedBall < balls.length()-1)
         {
             if(!moveButton->isEnabled())
                 moveButton->setEnabled(true);
 
-
-
             for(int j = -1 ; j < 2 ;j++)
-                balls.at(indexfClickedBall+j)->select();
+                balls.at(indexOfClickedBall+j)->select();
 
-            clickedIndex = indexfClickedBall;
+            clickedIndex = indexOfClickedBall;
+            emit clickedIndexChanged(clickedIndex);
         }
       else if(moveButton->isEnabled())
         moveButton->setEnabled(false);
     }
 }
+
+////todo zrob aby animacja działała dla wielu na raz
+//void MainWindow::itemsMoved(){
+
+//}
 
 

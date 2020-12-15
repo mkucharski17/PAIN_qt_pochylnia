@@ -6,6 +6,8 @@
 #include<QtGui>
 #include<QPushButton>
 #include<QGraphicsProxyWidget>
+#include<QPropertyAnimation>
+#include <QSignalMapper>
 #include"ramp.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,17 +21,24 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    int getClickedIndex();
 
 public slots:
 void itemSelected();
+
+
+signals:
+    void clickedIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     QList<MyCircle*> balls;
     QGraphicsProxyWidget *moveButton;
+    QPropertyAnimation *animation;
     int clickedIndex = -1;
     char getRandomColorLetter();
+    QSignalMapper *signalMapper;
 
 };
 #endif // MAINWINDOW_H
