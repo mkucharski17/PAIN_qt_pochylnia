@@ -32,6 +32,11 @@ public:
 signals:
     void clickedIndexChanged(MyCircle *ball);
 
+private slots:
+    void on_actionNowa_gra_triggered();
+
+    void on_actionZako_cz_triggered();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;

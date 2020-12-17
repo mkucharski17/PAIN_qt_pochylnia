@@ -18,7 +18,7 @@ public:
     int getIndex();
     void setCurrentIndex(int index);
     int getCurrentIndex();
-    QSequentialAnimationGroup* getAnimation();
+    QPropertyAnimation* getAnimation();
 
 
 signals:
@@ -30,7 +30,7 @@ private:
     QBrush getBrushFromLetter(char letter);
     int index;
     int currentIndex;
-    QSequentialAnimationGroup *group =  new QSequentialAnimationGroup;
+    QPropertyAnimation *animation = new QPropertyAnimation(this,"pos");
 
 
 

@@ -59,8 +59,6 @@ void BallsList::ballsAfterMoving(){
     qSort(balls.begin(), balls.end(),
           []( MyCircle *a,  MyCircle* b) -> bool { return a->getCurrentIndex() < b->getCurrentIndex(); });
 clickedBallIndex = -1;
-
-
 }
 
 char BallsList::getRandomColorLetter(){
