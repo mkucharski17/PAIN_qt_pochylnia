@@ -19,6 +19,7 @@ public:
     QList<MyCircle*> getBalls();
 public slots:
     void ballSelected(int index);
+    void ballsAfterMoving();
     void ballsMoving();
 
 signals:

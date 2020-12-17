@@ -14,9 +14,12 @@ public:
     MyCircle(double a, double b, double c, double d,char colorLetter, QGraphicsItem *parent);
     void select();
     void unselect();
-    void move(int);
-    void setIndex(int index);
+    void move();
     int getIndex();
+    void setCurrentIndex(int index);
+    int getCurrentIndex();
+    QSequentialAnimationGroup* getAnimation();
+
 
 signals:
     ballClicked(int);
@@ -26,6 +29,8 @@ protected:
 private:
     QBrush getBrushFromLetter(char letter);
     int index;
+    int currentIndex;
+    QSequentialAnimationGroup *group =  new QSequentialAnimationGroup;
 
 
 

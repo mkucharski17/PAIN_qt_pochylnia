@@ -6,6 +6,7 @@ BallsList::BallsList(QGraphicsItem *parent)
     {
         MyCircle* ball = new MyCircle(i,-0.3*i+300 -60,51.0,50.0,getRandomColorLetter(),parent);
         connect(ball,&MyCircle::ballClicked,this,&BallsList::ballSelected);
+        connect(ball->getAnimation(),&QSequentialAnimationGroup::finished, this,&BallsList::ballsAfterMoving);
         balls.append(ball);
     }
 }
@@ -16,6 +17,7 @@ QList<MyCircle*> BallsList::getBalls(){
 
 void BallsList::ballSelected(int clickedIndex)
 {
+    //czyscimy zaznaczenie jesli było
     if(clickedBallIndex != -1)
     for(int j = -1 ; j < 2 ;j++)
        balls.at(clickedBallIndex+j)->unselect();
@@ -35,25 +37,30 @@ void BallsList::ballSelected(int clickedIndex)
 }
 
 void BallsList::ballsMoving(){
-        int index = clickedBallIndex;
 
-    for(int i = 0 ; i < 3; i++){
-        balls.append(balls.at(index-1));
-        balls.last()->setIndex(balls.size()-4+i);
-        balls.at(index-1)->unselect();
-        balls.removeAt(index-1);
-
+    for(int i = -1 ; i < 2; i++){
+        balls.at(clickedBallIndex+i)->setCurrentIndex(balls.size()-2+i);
+        balls.at(clickedBallIndex+i)->unselect();
    }
-    balls.at(balls.size()-2)->setSelected(false);
-    for(int i = index-1 ; i < balls.size()-3; ++i)
+    balls.at(clickedBallIndex)->setSelected(false);
+
+    for(int i = clickedBallIndex+2 ; i < balls.size(); ++i)
     {
-        balls.at(i)->setIndex(i);}
-
-    for(int i = index-1 ; i < balls.size(); i++)
-        balls.at(i)->move(index);
-
+        balls.at(i)->setCurrentIndex(i-3);}
     emit moveIsNotPossible();
-    clickedBallIndex = -1;
+
+    for(int i = clickedBallIndex-1 ; i < balls.size(); i++)
+        balls.at(i)->move();
+
+
+}
+
+void BallsList::ballsAfterMoving(){
+    qSort(balls.begin(), balls.end(),
+          []( MyCircle *a,  MyCircle* b) -> bool { return a->getCurrentIndex() < b->getCurrentIndex(); });
+clickedBallIndex = -1;
+
+
 }
 
 char BallsList::getRandomColorLetter(){
