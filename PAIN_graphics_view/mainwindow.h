@@ -5,10 +5,16 @@
 #include<QtCore>
 #include<QtGui>
 #include<QPushButton>
+#include <QGraphicsView>
 #include<QGraphicsProxyWidget>
 #include<QPropertyAnimation>
 #include <QSignalMapper>
+#include <QEvent>
+#include <QtGlobal>
+
 #include"ramp.h"
+#include"ballslist.h"
+#include"movebutton.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,22 +29,15 @@ public:
     ~MainWindow();
     int getClickedIndex();
 
-public slots:
-void itemSelected();
-
-
 signals:
-    void clickedIndexChanged(int index);
+    void clickedIndexChanged(MyCircle *ball);
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QList<MyCircle*> balls;
-    QGraphicsProxyWidget *moveButton;
-    QPropertyAnimation *animation;
-    int clickedIndex = -1;
-    char getRandomColorLetter();
-    QSignalMapper *signalMapper;
+    BallsList *ballList;
+    Movebutton *moveButton;
+    Ramp* ramp ;
 
 };
 #endif // MAINWINDOW_H

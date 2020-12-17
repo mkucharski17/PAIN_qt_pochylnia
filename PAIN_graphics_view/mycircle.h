@@ -1,10 +1,10 @@
 #ifndef MYCIRCLE_H
 #define MYCIRCLE_H
-#include<QtCore>
 #include<QtGui>
 #include<QGraphicsItem>
 #include<QtMath>
 #include"colors.h"
+#include <QSequentialAnimationGroup>
 
 class MyCircle : public QObject,public QGraphicsEllipseItem
 {
@@ -14,18 +14,21 @@ public:
     MyCircle(double a, double b, double c, double d,char colorLetter, QGraphicsItem *parent);
     void select();
     void unselect();
-    void move();
-//    void moveDown();
-public slots:
-    void setClickedIndex(int index);
+    void move(int);
+    void setIndex(int index);
+    int getIndex();
 
+signals:
+    ballClicked(int);
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QBrush getBrushFromLetter(char letter);
-    QPropertyAnimation *animation;
     int index;
-    int clickedIndex;
-    bool movable = true;
+
+
+
 };
 
 #endif // MYCIRCLE_H

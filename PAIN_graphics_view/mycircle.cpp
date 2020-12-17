@@ -4,9 +4,7 @@ MyCircle::MyCircle(double a, double b, double c, double d,char colorLetter, QGra
 {
     index = a/50;
     this->setBrush(getBrushFromLetter(colorLetter));
-    animation = new QPropertyAnimation(this,"pos");
-    animation->setDuration(1000);
-
+    this->setFlag(QGraphicsItem::ItemIsSelectable , true);
 }
 
 void MyCircle::select()
@@ -16,27 +14,50 @@ void MyCircle::select()
 
 void MyCircle::unselect()
 {
-    this->setOpacity(1);     
+    this->setOpacity(1);
 }
 
-void MyCircle::move()
+void MyCircle::move(int clickedIndex)
 {
-   if(index >= clickedIndex -1)
-   {
-       if(this->opacity() == 0.3)
-           animation->setEndValue(QPointF(200,200));
+    qDebug() <<"clicked index" << clickedIndex;
+    QSequentialAnimationGroup *group = new QSequentialAnimationGroup;
+
+       QPropertyAnimation *animation = new QPropertyAnimation(this,"pos");
+       animation->setDuration(1000);
+       group->addAnimation(animation);
+       int x = (20 - clickedIndex-2)*50;
+       animation->setStartValue(this->pos());
+       if(index >=17)
+       {
+           animation->setEndValue(QPointF(x,-0.3*x));
+           group->start();
+       }
        else
+       {
            animation->setEndValue(QPointF(-200,-200));
+           QPropertyAnimation *animation2 = new QPropertyAnimation(this,"pos");
+           animation2->setDuration(1000);
+           animation2->setStartValue(QPointF(-200,-200));
+           animation2->setEndValue(QPointF(-150,0.3*150));
 
-       animation->start();
-   }
+
+           group->addAnimation(animation2);
+           group->start();
+       }
 
 }
 
-void MyCircle::setClickedIndex(int index)
+void MyCircle::setIndex(int newIndex)
 {
-  clickedIndex = index;
+    qDebug() <<"previous" << index << " new "<< newIndex;
+  this->index = newIndex;
 }
+
+int MyCircle::getIndex()
+{
+ return index;
+}
+
 
 QBrush MyCircle::getBrushFromLetter(char letter)
 {
@@ -45,6 +66,13 @@ QBrush MyCircle::getBrushFromLetter(char letter)
     case 'G' : return QBrush(Qt::green);
     case 'B' : return QBrush(Qt::blue);
     }
+}
+
+void MyCircle::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << index;
+    emit ballClicked(index);
+    QGraphicsItem::mousePressEvent(event);
 }
 
 
