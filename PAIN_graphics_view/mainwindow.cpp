@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
       ui(new Ui::MainWindow)
 
 {
+
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
@@ -33,7 +34,6 @@ MainWindow::~MainWindow()
 }
 
 
-
 void MainWindow::on_actionNowa_gra_triggered()
 {
     scene->clear();
@@ -47,7 +47,6 @@ void MainWindow::on_actionNowa_gra_triggered()
 
     connect(btn, &QPushButton::clicked, ballList,&BallsList::ballsMoving);
     connect(ballList,&BallsList::moveIsNotPossible,moveButton, &Movebutton::buttonDeactivate);
-
     connect(ballList,&BallsList::moveIsPossible,moveButton, &Movebutton::buttonActivate);
     ui->graphicsView->show();
 }
